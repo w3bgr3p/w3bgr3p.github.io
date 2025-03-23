@@ -3,7 +3,7 @@ const socialLinks = [
     { name: 'GitHub', url: 'https://github.com/w3bgrep' },
     { name: 'Youtube ', url: 'https://www.youtube.com/@w3bgrep' },
     { name: 'Telegram dm', url: 'https://t.me/w3bgr3p' },
-    { name: 'X', url: 'https://x.com/web3grep },
+    { name: 'X', url: 'https://x.com/web3grep' },
 ];
 
 const socialContainer = document.getElementById('social-links');
