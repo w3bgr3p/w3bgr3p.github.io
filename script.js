@@ -17,8 +17,8 @@ socialLinks.forEach(link => {
 
 // Ссылки на соцсети
 const communityLinks = [
-    { name: 'W3Zen discord', url: 'https://github.com/w3bgrep' },
-    { name: 'W3Zen telegram', url: 'https://www.youtube.com/@w3bgrep' },
+    { name: 'W3Zen discord', url: 'https://link.web3grep.xyz/W3Zen-Discord' },
+    { name: 'W3Zen telegram', url: 'https://link.web3grep.xyz/w3zenCommunity' },
     { name: 'web3topia public', url: 'https://t.me/web3topia' },
     { name: 'web3grep personal', url: 'https://t.me/web3grep' },
 ];
