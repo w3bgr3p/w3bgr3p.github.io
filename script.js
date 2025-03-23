@@ -21,13 +21,16 @@ async function fetchProjects() {
     const repos = await response.json();
     const projectList = document.getElementById('project-list');
 
-    repos.slice(0, 5).forEach(repo => { //  5 последних репозиториев
+    const sortedRepos = repos.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
+
+    // Берем первые 5 из отсортированного массива
+    sortedRepos.slice(0, 5).forEach(repo => {
         const div = document.createElement('div');
         div.classList.add('project');
         div.innerHTML = `
             <strong>${repo.name}</strong><br>
             ${repo.description || 'Описание отсутствует'}<br>
-            <a href="${repo.html_url}" target="_blank">go GitHub</a>
+            <a href="${repo.html_url}" target="_blank">Посмотреть на GitHub</a>
         `;
         projectList.appendChild(div);
     });
