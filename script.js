@@ -44,9 +44,11 @@ async function fetchProjects() {
         const div = document.createElement('div');
         div.classList.add('project');
         div.innerHTML = `
-            <strong>${repo.name}</strong><br>
+            <a href="${repo.html_url}" target="_blank"><strong>${repo.name}</strong></a>
+
+            //<strong>${repo.name}</strong><br>
             ${repo.description || ''}<br>
-            <a href="${repo.html_url}" target="_blank">go GitHub</a>
+            //<a href="${repo.html_url}" target="_blank">go GitHub</a>
         `;
         projectList.appendChild(div);
     });
