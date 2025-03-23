@@ -44,7 +44,7 @@ async function fetchProjects() {
         const div = document.createElement('div');
         div.classList.add('project');
         div.innerHTML = `
-            <a href="${repo.html_url}" target="_blank"><strong>${repo.name}</strong></a>
+            <a href="${repo.html_url}" target="_blank"><strong>${repo.name}</strong></a><br>
 
             //<strong>${repo.name}</strong><br>
             ${repo.description || ''}<br>
