@@ -16,21 +16,19 @@ socialLinks.forEach(link => {
 
 //  проекты с GitHub
 async function fetchProjects() {
-    const username = 'w3bgrep'; 
-    const response = await fetch(`https://api.github.com/users/${username}/repos`);
+    const username = 'w3bgrep'; // Замени на свой ник
+    const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&direction=desc`);
     const repos = await response.json();
     const projectList = document.getElementById('project-list');
 
-    const sortedRepos = repos.sort((a, b) => new Date(b.updated_at) - new Date(a.updated_at));
-
-    // Берем первые 5 из отсортированного массива
-    sortedRepos.slice(0, 5).forEach(repo => {
+    // Берем первые 5 репозиториев
+    repos.slice(0, 5).forEach(repo => {
         const div = document.createElement('div');
         div.classList.add('project');
         div.innerHTML = `
             <strong>${repo.name}</strong><br>
-            ${repo.description || 'Описание отсутствует'}<br>
-            <a href="${repo.html_url}" target="_blank">Посмотреть на GitHub</a>
+            ${repo.description || ''}<br>
+            <a href="${repo.html_url}" target="_blank">go GitHub</a>
         `;
         projectList.appendChild(div);
     });
