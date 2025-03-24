@@ -1,9 +1,9 @@
 // Ссылки на соцсети
 const socialLinks = [
-    { name: 'GitHub', url: 'https://github.com/w3bgrep' },
-    { name: 'Youtube ', url: 'https://www.youtube.com/@w3bgrep' },
-    { name: 'Telegram dm', url: 'https://t.me/w3bgr3p' },
-    { name: 'X', url: 'https://x.com/web3grep' },
+    { name: 'GitHub', url: 'https://github.com/w3bgrep', icon: 'fab fa-github' },
+    { name: 'Youtube ', url: 'https://www.youtube.com/@w3bgrep', icon: 'fab fa-youtube' },
+    { name: 'Telegram dm', url: 'https://t.me/w3bgr3p', icon: 'fab fa-telegram' },
+    { name: 'X', url: 'https://x.com/web3grep', icon: 'fab fa-x-twitter' },
 ];
 
 const socialContainer = document.getElementById('social-links');
@@ -12,6 +12,7 @@ socialLinks.forEach(link => {
     a.href = link.url;
     a.textContent = link.name;
     a.target = '_blank';
+    a.innerHTML = `<i class="${link.icon}"></i>`; // Иконка вместо текста
     socialContainer.appendChild(a);
 });
 
@@ -46,12 +47,17 @@ async function fetchProjects() {
         div.innerHTML = `
             <a href="${repo.html_url}" target="_blank"><strong>${repo.name}</strong></a><br>
 
-            //<strong>${repo.name}</strong><br>
             ${repo.description || ''}<br>
-            //<a href="${repo.html_url}" target="_blank">go GitHub</a>
         `;
         projectList.appendChild(div);
     });
 }
 
 fetchProjects().catch(err => console.error('Ошибка загрузки проектов:', err));
+
+
+window.addEventListener('mousemove', (e) => {
+    const x = e.clientX / window.innerWidth;
+    const y = e.clientY / window.innerHeight;
+    document.body.style.backgroundPosition = `${x * 50}px ${y * 50}px`;
+});
