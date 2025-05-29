@@ -21,7 +21,8 @@ const communityLinks = [
     { name: 'W3Zen discord', url: 'https://link.web3grep.xyz/W3Zen-Discord' },
     { name: 'W3Zen telegram', url: 'https://link.web3grep.xyz/w3zenCommunity' },
     { name: 'web3topia public', url: 'https://t.me/web3topia' },
-    { name: 'web3grep personal', url: 'https://t.me/web3grep' },
+    { name: 'scriptfolio', url: 'https://t.me/w3zenn' },
+    { name: 'cleantree', url: 'cleantree.html' },
 ];
 
 const communityContainer = document.getElementById('community-links');
@@ -35,25 +36,21 @@ communityLinks.forEach(link => {
 
 //  проекты с GitHub
 async function fetchProjects() {
-    const username = 'w3bgrep'; // Замени на свой ник
+    const username = 'w3bgrep';
     const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&direction=desc`);
     const repos = await response.json();
     const projectList = document.getElementById('project-list');
 
-    // Берем первые 5 репозиториев
     repos.slice(0, 5).forEach(repo => {
         const div = document.createElement('div');
         div.classList.add('project');
-        div.innerHTML = `
-            <a href="${repo.html_url}" target="_blank"><strong>${repo.name}</strong></a><br>
-
-            ${repo.description || ''}<br>
-        `;
+        div.innerHTML = `<a href="${repo.html_url}" target="_blank">${repo.name}</a>`;
+        div.setAttribute('data-description', repo.description || ''); // Добавляем описание
         projectList.appendChild(div);
     });
 }
-
 fetchProjects().catch(err => console.error('Ошибка загрузки проектов:', err));
+
 
 
 window.addEventListener('mousemove', (e) => {

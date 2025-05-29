@@ -1,13 +1,177 @@
 body {
     position: relative; /* Для позиционирования псевдоэлемента */
-    font-family: 'Arial', sans-serif;
+    font-family: 'Consolas', sans-serif;
+    color: #fff;
     margin: 0;
     background: url('background.png') no-repeat center center fixed;
     background-size: cover; /* Растягивает изображение на весь экран */
     background-color: #000000;
     min-height: 100vh;
     display: flex;
-    flex-direction: column;
+    flex-direction: column;хорошо body {
+        position: relative; /* Для позиционирования псевдоэлемента */
+        font-family: 'Arial', sans-serif;
+        color: #fff;
+        margin: 0;
+        background: url('background.png') no-repeat center center fixed;
+        background-size: cover; /* Растягивает изображение на весь экран */
+        background-color: #000000;
+        min-height: 100vh;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    body::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: 0;
+        width: 100%;
+        height: 100%;
+        background: rgba(0, 0, 0, 0.5); /* Черный слой с прозрачностью 50% */
+        z-index: -1; /* Помещает слой под контент */
+    }
+    
+    header, main, footer {
+        max-width: 600px;
+        width: 100%;
+        padding: 20px;
+        text-align: center;
+    }
+    
+    header h1 {
+        font-size: 2.5em;
+        color: #fff;
+        text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.2);
+    }
+    
+    
+    .links {
+        margin: 20px 0;
+    }
+    
+    #social-links {
+        
+        display: grid;
+        grid-template-columns: repeat(2, 1fr); /* 2 столбца равной ширины */
+        gap: 10px; /* Отступы между ячейками */
+        justify-items: center; /* Центрируем содержимое */
+    }
+    
+    #social-links a {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        width: 60px; /* Фиксированная ширина кнопки */
+        height: 60px; /* Фиксированная высота кнопки */
+        background-color: #b4b4b4;
+        color: #333;
+        text-decoration: none;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s ease, background-color 0.2s ease;
+        font-size: 24px; /* Размер иконки */
+    }
+    
+    #social-links a:hover {
+        transform: scale(1.05);
+        background-color: #ffffff;
+    }
+    
+    .links a, .projects .project {
+        display: block;
+        margin: 10px 0;
+        padding: 15px;
+        background-color: #fff;
+        color: #333;
+        text-decoration: none;
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        transition: transform 0.2s;
+    }
+    
+    .links a:hover, .projects .project:hover {
+        transform: scale(1.05);
+    }
+    
+    .projects .project {
+        background: #f9f9f9;
+    }
+    
+    .projects {
+        margin: 20px 0;
+    }
+    
+    
+    
+    #project-list .project:hover {
+        transform: scale(1.05);
+        background-color: #ffffff;
+    }
+    
+    #project-list .project a {
+        color: #333; /* Цвет текста внутри ссылки */
+        text-decoration: none; /* Убираем подчеркивание */
+        font-weight: bold; /* Делаем текст чуть жирнее для стиля */
+        width: 100%; /* Растягиваем ссылку на весь контейнер */
+        height: 100%;
+        display: flex; /* Чтобы текст центрировался */
+        align-items: center;
+        justify-content: center;
+    }
+    
+    
+    #project-list .project:hover a {
+        color: #333; /* Цвет текста при наведении остается таким же */
+    }
+    
+    /* Всплывающее описание */
+    #project-list .project::after {
+        content: attr(data-description); /* Берем описание из атрибута */
+        position: absolute;
+        bottom: 100%; /* Появляется над элементом */
+        left: 50%;
+        transform: translateX(-50%);
+        background-color: rgba(0, 0, 0, 0.8);
+        color: #fff;
+        padding: 8px;
+        border-radius: 4px;
+        font-size: 14px;
+        white-space: nowrap;
+        opacity: 0;
+        visibility: hidden;
+        transition: opacity 0.2s ease;
+        z-index: 10;
+    }
+    
+    #project-list .project:hover::after {
+        opacity: 1;
+        visibility: visible;
+    }
+    
+    /* Адаптивность */
+    @media (max-width: 600px) {
+        #project-list {
+            grid-template-columns: 1fr; /* Один столбец на маленьких экранах */
+        }
+        #project-list .project {
+            max-width: 100%; /* Полная ширина на маленьких экранах */
+        }
+    }
+    
+    
+    
+    /* Адаптивность */
+    @media (max-width: 600px) {
+        header h1 {
+            font-size: 1.8em;
+        }
+        .links a, .projects .project {
+            padding: 10px;
+        }
+    }
+    
     align-items: center;
 }
 
@@ -87,6 +251,90 @@ header h1 {
 .projects .project {
     background: #f9f9f9;
 }
+
+.projects {
+    margin: 20px 0;
+}
+
+#project-list {
+    display: flex;
+    flex-direction: column; /* Элементы выстраиваются в столбец */
+    gap: 10px; /* Отступы между элементами */
+    justify-items: center; /* Центрируем содержимое */
+}
+
+#project-list .project {
+    width: 100%; /* Полная ширина для каждого элемента */
+    max-width: 100%; /* Убираем ограничение ширины */
+    height: 60px; /* Сохраняем фиксированную высоту */
+    background-color: #b4b4b4;
+    color: #333;
+    text-decoration: none;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    transition: transform 0.2s ease, background-color 0.2s ease;
+    font-size: 16px;
+    text-align: center;
+    padding: 10px;
+    box-sizing: border-box;
+}
+
+#project-list .project:hover {
+    transform: scale(1.05);
+    background-color: #ffffff;
+}
+
+#project-list .project a {
+    color: #333; /* Цвет текста внутри ссылки */
+    text-decoration: none; /* Убираем подчеркивание */
+    font-weight: bold; /* Делаем текст чуть жирнее для стиля */
+    width: 100%; /* Растягиваем ссылку на весь контейнер */
+    height: 100%;
+    display: flex; /* Чтобы текст центрировался */
+    align-items: center;
+    justify-content: center;
+}
+
+
+#project-list .project:hover a {
+    color: #333; /* Цвет текста при наведении остается таким же */
+}
+
+/* Всплывающее описание */
+#project-list .project::after {
+    content: attr(data-description); /* Берем описание из атрибута */
+    position: absolute;
+    bottom: 100%; /* Появляется над элементом */
+    left: 50%;
+    transform: translateX(-50%);
+    background-color: rgba(0, 0, 0, 0.8);
+    color: #fff;
+    padding: 8px;
+    border-radius: 4px;
+    font-size: 14px;
+    white-space: nowrap;
+    opacity: 0;
+    visibility: hidden;
+    transition: opacity 0.2s ease;
+    z-index: 10;
+}
+
+#project-list .project:hover::after {
+    opacity: 1;
+    visibility: visible;
+}
+
+/* Адаптивность */
+@media (max-width: 600px) {
+    #project-list {
+        grid-template-columns: 1fr; /* Один столбец на маленьких экранах */
+    }
+    #project-list .project {
+        max-width: 100%; /* Полная ширина на маленьких экранах */
+    }
+}
+
+
 
 /* Адаптивность */
 @media (max-width: 600px) {

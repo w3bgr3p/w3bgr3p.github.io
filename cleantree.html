@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>cleankthree</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Consolas', monospace;
+            color: #fff;
+            margin: 0;
+            background: #000;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+        }
+
+        body::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.5);
+            z-index: -1;
+        }
+
+        main {
+            max-width: 600px;
+            width: 100%;
+            padding: 20px;
+            text-align: center;
+        }
+
+        h1 {
+            font-size: 2em;
+            margin-bottom: 20px;
+            text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .links a {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 15px;
+            background-color: #333;
+            color: #fff;
+            text-decoration: none;
+            border-radius: 8px;
+            transition: background-color 0.2s ease, transform 0.2s ease;
+            font-size: 16px;
+        }
+
+        .links a:hover {
+            background-color: #555;
+            transform: scale(1.05);
+        }
+
+        .links a i {
+            margin-right: 10px;
+        }
+
+        @media (max-width: 600px) {
+            h1 {
+                font-size: 1.5em;
+            }
+            .links a {
+                padding: 10px;
+                font-size: 14px;
+            }
+        }
+    </style>
+</head>
+<body>
+    <main>
+        <h1>cleankthree</h1>
+        <section class="links">
+            <a href="https://t.me/w3bgr3p"><i class="fab fa-telegram"></i>DM</a>
+            <a href="https://www.youtube.com/@web3grep"><i class="fab fa-youtube"></i>YouTube</a>
+            <a href="https://t.me/web3topia"><i class="fab fa-telegram"></i>web3topia Public</a>
+            <a href="https://link.web3grep.xyz/w3zenCommunity"><i class="fab fa-telegram"></i>w3zen Public</a>
+            <a href="https://link.web3grep.xyz/W3Zen-Discord"><i class="fab fa-discord"></i>W3Zen Discord (code/zenno)</a>
+            <a href="https://t.me/w3zenn"><i class="fab fa-telegram"></i>w3zen Private (scriptfolio)</a>
+            <a href="https://teletype.in/@web3grep"><i class="fas fa-blog"></i>Teletype</a>
+            <a href="https://t.me/web3grep"><i class="fab fa-telegram"></i>Personal TG (shitposting)</a>
+        </section>
+    </main>
+</body>
+</html>
