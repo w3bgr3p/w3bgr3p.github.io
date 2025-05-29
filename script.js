@@ -3,7 +3,7 @@ const socialLinks = [
     { name: 'GitHub', url: 'https://github.com/w3bgrep', icon: 'fab fa-github' },
     { name: 'Youtube ', url: 'https://www.youtube.com/@w3bgrep', icon: 'fab fa-youtube' },
     { name: 'Telegram dm', url: 'https://t.me/w3bgr3p', icon: 'fab fa-telegram' },
-    { name: 'X', url: 'https://x.com/web3grep', icon: 'fab fa-x-twitter' },
+    { name: 'X', url: 'https://x.com/w3bgrep', icon: 'fab fa-x-twitter' },
 ];
 
 const socialContainer = document.getElementById('social-links');
@@ -56,5 +56,11 @@ fetchProjects().catch(err => console.error('Ошибка загрузки про
 window.addEventListener('mousemove', (e) => {
     const x = e.clientX / window.innerWidth;
     const y = e.clientY / window.innerHeight;
-    document.body.style.backgroundPosition = `${x * 50}px ${y * 50}px`;
+
+    // Центрируем смещение: когда x=0.5, y=0.5, смещение фона = 0
+    const offsetX = (x - 0.5) * 100; // Умножаем на 100 для масштаба смещения
+    const offsetY = (y - 0.5) * 100;
+    
+    document.body.style.backgroundPosition = `${offsetX}px ${offsetY}px`;
+    //document.body.style.backgroundPosition = `${x * 50}px ${y * 50}px`;
 });
