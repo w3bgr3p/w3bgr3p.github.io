@@ -128,8 +128,8 @@ function addDeviceMotionListener() {
         }
 
         // Вычисляем смещение относительно калиброванной позиции
-        const deltaX = (currentX - baseAccelerationX) * 15; // Коэффициент чувствительности
-        const deltaY = (currentY - baseAccelerationY) * 15;
+        const deltaX = (currentX - baseAccelerationX) * 1; // Коэффициент чувствительности
+        const deltaY = (currentY - baseAccelerationY) * 1;
 
         // Применяем смещение относительно центра
         document.body.style.backgroundPosition = `calc(50% + ${deltaX}px) calc(50% + ${deltaY}px)`;
