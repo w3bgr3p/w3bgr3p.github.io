@@ -36,7 +36,7 @@ communityLinks.forEach(link => {
 
 //  проекты с GitHub
 async function fetchProjects() {
-    const username = 'w3bgrep';
+    const username = 'w3bgr3p';
     const response = await fetch(`https://api.github.com/users/${username}/repos?sort=updated&direction=desc`);
     const repos = await response.json();
     const projectList = document.getElementById('project-list');
@@ -51,21 +51,33 @@ async function fetchProjects() {
 }
 fetchProjects().catch(err => console.error('Ошибка загрузки проектов:', err));
 
+// Базовые координаты для центрирования фона
+let baseX = 0;
+let baseY = 0;
 
+// Устанавливаем центральную позицию фона при загрузке
+function initializeBackground() {
+    document.body.style.backgroundPosition = '50% 50%';
+    baseX = 0;
+    baseY = 0;
+}
 
+// Инициализируем фон при загрузке страницы
+window.addEventListener('DOMContentLoaded', initializeBackground);
+
+// Обработчик движения мыши для десктопа
 window.addEventListener('mousemove', (e) => {
     const x = e.clientX / window.innerWidth;
     const y = e.clientY / window.innerHeight;
 
     // Центрируем смещение: когда x=0.5, y=0.5, смещение фона = 0
-    const offsetX = (x - 0.5) * 100; // Умножаем на 100 для масштаба смещения
-    const offsetY = (y - 0.5) * 100;
+    const offsetX = baseX + (x - 0.5) * 100; // Умножаем на 100 для масштаба смещения
+    const offsetY = baseY + (y - 0.5) * 100;
     
-    document.body.style.backgroundPosition = `${offsetX}px ${offsetY}px`;
-    //document.body.style.backgroundPosition = `${x * 50}px ${y * 50}px`;
+    document.body.style.backgroundPosition = `calc(50% + ${offsetX}px) calc(50% + ${offsetY}px)`;
 });
 
-
+// Мобильная версия с акселерометром
 const isMobile = /Mobi|Android/i.test(navigator.userAgent);
 if (isMobile && 'DeviceMotionEvent' in window) {
     // Запрашиваем разрешение (в новых браузерах это обязательно)
@@ -84,19 +96,60 @@ if (isMobile && 'DeviceMotionEvent' in window) {
         addDeviceMotionListener();
     }
 }
- 
+
 function addDeviceMotionListener() {
+    // Переменные для калибровки начального положения
+    let calibrated = false;
+    let baseAccelerationX = 0;
+    let baseAccelerationY = 0;
+    let calibrationCount = 0;
+    const calibrationFrames = 10; // Количество кадров для калибровки
+
     window.addEventListener('devicemotion', (event) => {
         const acceleration = event.accelerationIncludingGravity;
         if (!acceleration) return;
- 
-        // Пример расчёта смещения на основе ускорения (X и Y оси, с нормализацией)
-        // Умножьте/поделите коэффициенты для регулировки чувствительности
-        const offsetX = (acceleration.x || 0) * 10; // X-ось: лево-право
-        const offsetY = (acceleration.y || 0) * 10; // Y-ось: верх-низ
- 
-        // Центрируем, как в вашем коде (относительно "нейтрального" положения)
-        document.body.style.backgroundPosition = `${offsetX}px ${offsetY}px`;
+
+        const currentX = acceleration.x || 0;
+        const currentY = acceleration.y || 0;
+
+        // Калибровка: определяем "нейтральное" положение устройства
+        if (!calibrated) {
+            baseAccelerationX += currentX;
+            baseAccelerationY += currentY;
+            calibrationCount++;
+
+            if (calibrationCount >= calibrationFrames) {
+                baseAccelerationX /= calibrationFrames;
+                baseAccelerationY /= calibrationFrames;
+                calibrated = true;
+                console.log(`Калибровка завершена. Базовые значения: X=${baseAccelerationX.toFixed(2)}, Y=${baseAccelerationY.toFixed(2)}`);
+            }
+            return;
+        }
+
+        // Вычисляем смещение относительно калиброванной позиции
+        const deltaX = (currentX - baseAccelerationX) * 15; // Коэффициент чувствительности
+        const deltaY = (currentY - baseAccelerationY) * 15;
+
+        // Применяем смещение относительно центра
+        document.body.style.backgroundPosition = `calc(50% + ${deltaX}px) calc(50% + ${deltaY}px)`;
+    });
+
+    // Возможность рекалибровки при двойном касании экрана
+    let lastTap = 0;
+    document.addEventListener('touchend', (e) => {
+        const currentTime = new Date().getTime();
+        const tapLength = currentTime - lastTap;
+        
+        if (tapLength < 500 && tapLength > 0) {
+            // Двойное касание - рекалибровка
+            calibrated = false;
+            calibrationCount = 0;
+            baseAccelerationX = 0;
+            baseAccelerationY = 0;
+            console.log('Начинается рекалибровка...');
+        }
+        
+        lastTap = currentTime;
     });
 }
- 
