@@ -21,7 +21,7 @@ const communityLinks = [
     { name: 'W3Zen discord', url: 'https://link.web3grep.xyz/W3Zen-Discord' },
     { name: 'W3Zen telegram', url: 'https://link.web3grep.xyz/w3zenCommunity' },
     { name: 'web3topia public', url: 'https://t.me/web3topia' },
-    { name: 'scriptfolio', url: 'https://t.me/w3zenn' },
+    { name: 'scriptfolio', url: 'https://t.me/w3blabs' },
     { name: 'cleantree', url: 'cleantree.html' },
 ];
 
