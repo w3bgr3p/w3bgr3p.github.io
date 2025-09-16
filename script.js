@@ -1,7 +1,7 @@
 // Ссылки на соцсети
 const socialLinks = [
-    { name: 'GitHub', url: 'https://github.com/w3bgrep', icon: 'fab fa-github' },
-    { name: 'Youtube ', url: 'https://www.youtube.com/@w3bgrep', icon: 'fab fa-youtube' },
+    { name: 'GitHub', url: 'https://github.com/w3bgr3p', icon: 'fab fa-github' },
+    { name: 'Youtube ', url: 'https://www.youtube.com/@w3bgr3p', icon: 'fab fa-youtube' },
     { name: 'Telegram dm', url: 'https://t.me/w3bgr3p', icon: 'fab fa-telegram' },
     { name: 'X', url: 'https://x.com/w3bgrep', icon: 'fab fa-x-twitter' },
 ];
@@ -64,3 +64,39 @@ window.addEventListener('mousemove', (e) => {
     document.body.style.backgroundPosition = `${offsetX}px ${offsetY}px`;
     //document.body.style.backgroundPosition = `${x * 50}px ${y * 50}px`;
 });
+
+
+const isMobile = /Mobi|Android/i.test(navigator.userAgent);
+if (isMobile && 'DeviceMotionEvent' in window) {
+    // Запрашиваем разрешение (в новых браузерах это обязательно)
+    if (typeof DeviceMotionEvent.requestPermission === 'function') {
+        DeviceMotionEvent.requestPermission()
+            .then(permissionState => {
+                if (permissionState === 'granted') {
+                    addDeviceMotionListener();
+                } else {
+                    console.log('Доступ к акселерометру отклонён');
+                }
+            })
+            .catch(console.error);
+    } else {
+        // Для старых браузеров без requestPermission
+        addDeviceMotionListener();
+    }
+}
+ 
+function addDeviceMotionListener() {
+    window.addEventListener('devicemotion', (event) => {
+        const acceleration = event.accelerationIncludingGravity;
+        if (!acceleration) return;
+ 
+        // Пример расчёта смещения на основе ускорения (X и Y оси, с нормализацией)
+        // Умножьте/поделите коэффициенты для регулировки чувствительности
+        const offsetX = (acceleration.x || 0) * 10; // X-ось: лево-право
+        const offsetY = (acceleration.y || 0) * 10; // Y-ось: верх-низ
+ 
+        // Центрируем, как в вашем коде (относительно "нейтрального" положения)
+        document.body.style.backgroundPosition = `${offsetX}px ${offsetY}px`;
+    });
+}
+ 
