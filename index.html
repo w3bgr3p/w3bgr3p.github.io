@@ -1,34 +1,239 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="ru">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>w3bgrep liinks</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>w3bgr3p — ZennoPoster & Web3 Automation</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <style>
+        :root {
+            --bg: #000000;
+            --card-bg: #0a0a0a;
+            --border: #222;
+            --text-main: #ffffff;
+            --text-dim: #888;
+            --accent: #4ade80; 
+        }
+
+        body {
+            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            background: var(--bg);
+            color: var(--text-main);
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            padding: 40px 20px;
+        }
+
+        .container {
+            max-width: 480px;
+            width: 100%;
+        }
+
+        header {
+            text-align: center;
+            margin-bottom: 35px;
+        }
+
+        header h1 {
+            font-size: 2.2rem;
+            letter-spacing: -1px;
+            margin-bottom: 8px;
+        }
+
+        header p {
+            color: var(--text-dim);
+            font-size: 0.95rem;
+            line-height: 1.5;
+        }
+
+        .links {
+            display: flex;
+            flex-direction: column;
+            gap: 12px;
+        }
+
+        .link-item {
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 18px 20px;
+            text-decoration: none;
+            color: inherit;
+            transition: all 0.2s ease;
+        }
+
+        .link-item:hover {
+            border-color: #444;
+            transform: translateY(-1px);
+        }
+
+        .featured {
+            border: 1px solid var(--accent);
+            background: rgba(74, 222, 128, 0.02);
+        }
+
+        .link-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: baseline;
+            margin-bottom: 5px;
+        }
+
+        .link-title {
+            font-weight: 600;
+            font-size: 1.05rem;
+        }
+
+        .link-desc {
+            font-size: 0.85rem;
+            color: var(--text-dim);
+            line-height: 1.4;
+        }
+
+        .price {
+            font-family: 'Courier New', monospace;
+            color: var(--accent);
+            font-weight: bold;
+            font-size: 0.95rem;
+            white-space: nowrap;
+        }
+
+        .pow-section {
+            margin-top: 40px;
+            background: var(--card-bg);
+            border: 1px solid var(--border);
+            border-radius: 8px;
+            padding: 22px;
+        }
+
+        .pow-section h3 {
+            font-size: 0.75rem;
+            text-transform: uppercase;
+            letter-spacing: 2px;
+            color: var(--text-dim);
+            margin-bottom: 18px;
+            text-align: center;
+        }
+
+        .pow-item {
+            font-size: 0.85rem;
+            margin-bottom: 15px;
+            line-height: 1.5;
+            display: flex;
+            gap: 12px;
+        }
+
+        .pow-item:last-child { margin-bottom: 0; }
+        .pow-item i { color: var(--accent); margin-top: 3px; font-size: 0.9rem; }
+        .pow-item b { color: #fff; }
+
+        .socials {
+            display: flex;
+            justify-content: center;
+            gap: 25px;
+            margin-top: 35px;
+        }
+
+        .social-icon {
+            color: var(--text-dim);
+            font-size: 1.4rem;
+            transition: color 0.2s;
+        }
+
+        .social-icon:hover { color: var(--text-main); }
+
+        footer {
+            text-align: center;
+            margin-top: 50px;
+            font-size: 0.7rem;
+            color: #333;
+            letter-spacing: 1px;
+            text-transform: uppercase;
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>w3bgr3p</h1>
-       
-    </header>
-    <main>
-        <section class="links">
-            <h2></h2>
-            <div id="social-links"></div>
-        </section>
-        <section class="links">
-            <h2>extra links</h2>
-            <div id="community-links"></div>
-        </section>
-        <section class="repos">
-            <h2>last repos</h2>
-            <div id="project-list"></div>
-        </section>
-    </main>
-    <footer>
-        <p>© 2025 | built</p>
-    </footer>
-    <script src="script.js"></script>
+    <div class="container">
+        <header>
+            <h1>w3bgr3p</h1>
+            <p>ZennoPoster & C# Developer<br>
+               Automation for Web3 / Multi-accounting</p>
+        </header>
+
+        <div class="links">
+            <a href="https://t.me/w3bgr3p" class="link-item featured" target="_blank">
+                <div class="link-header">
+                    <span class="link-title" style="color: var(--accent);">Z3nFarm (Private Group)</span>
+                    <span class="price">Subscription</span>
+                </div>
+                <div class="link-desc">Доступ к моим шаблонам под актуальные крипто-проекты.<br>
+                Access to my personal automation tools for active Web3 projects.</div>
+            </a>
+
+            <a href="https://t.me/w3bgr3p" class="link-item" target="_blank">
+                <div class="link-header">
+                    <span class="link-title">Web3 & Airdrop Software</span>
+                    <span class="price">from $500</span>
+                </div>
+                <div class="link-desc">Разработка ферм, смарт-контракты, анти-сибил архитектура.<br>
+                Custom farm development, smart-contracts, anti-sybil.</div>
+            </a>
+
+            <a href="https://t.me/w3bgr3p" class="link-item" target="_blank">
+                <div class="link-header">
+                    <span class="link-title">Automation & Parsing</span>
+                    <span class="price">from $150</span>
+                </div>
+                <div class="link-desc">Браузерная автоматизация, сбор и обработка данных.<br>
+                Browser automation, data mining and processing.</div>
+            </a>
+
+            <a href="https://t.me/w3bgr3p" class="link-item" target="_blank">
+                <div class="link-header">
+                    <span class="link-title">Code Review & Optimization</span>
+                    <span class="price">from $200</span>
+                </div>
+                <div class="link-desc">Аудит и рефакторинг вашего Zenno/C# кода.<br>
+                Optimization and refactoring of your Zenno/C# code.</div>
+            </a>
+
+            <a href="https://t.me/w3bgr3p" class="link-item" target="_blank">
+                <div class="link-header">
+                    <span class="link-title">Consultation</span>
+                    <span class="price">$100/h</span>
+                </div>
+                <div class="link-desc">Разбор технических проблем и архитектуры систем.<br>
+                Tech issues and system architecture analysis.</div>
+            </a>
+        </div>
+
+        <div class="pow-section">
+            <h3>Proof of Work</h3>
+            <div class="pow-item">
+                <i class="fas fa-award"></i>
+                <span><b>ZennoLab Prize Winner.</b> Решения, признанные разработчиками платформы.</span>
+            </div>
+            <div class="pow-item">
+                <i class="fas fa-code-merge"></i>
+                <span><b>Author of z3nCore.</b> Open-source библиотека. Используется профи в реальных проектах.</span>
+            </div>
+            <div class="pow-item">
+                <i class="fas fa-chart-line"></i>
+                <span><b>Airdrop Stats (yield/acc):</b> Movement ~$1500, MagicSquare $130+, Initia $500, COAI $200.</span>
+            </div>
+        </div>
+
+        <div class="socials">
+            <a href="https://t.me/w3bgr3p" class="social-icon" target="_blank"><i class="fab fa-telegram"></i></a>
+            <a href="https://github.com/w3bgr3p" class="social-icon" target="_blank"><i class="fab fa-github"></i></a>
+            <a href="https://x.com/w3bgrep" class="social-icon" target="_blank"><i class="fab fa-x-twitter"></i></a>
+            <a href="https://discord.gg/zX9ubenG9g" class="social-icon" target="_blank"><i class="fab fa-discord"></i></a>
+        </div>
+
+        <footer>
+            NO SPAM. NO CORPORATE. JUST AUTOMATION.
+        </footer>
+    </div>
 </body>
 </html>
