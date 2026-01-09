@@ -4,8 +4,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>w3bgr3p — ZennoPoster & Web3 Automation</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <title>w3bgr3p — Terminal</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css">
     <style>
         :root {
             --bg: #000000;
@@ -17,7 +17,7 @@
         }
 
         body {
-            font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
+            font-family: 'Consolas', 'Courier New', monospace;
             background: var(--bg);
             color: var(--text-main);
             margin: 0;
@@ -38,14 +38,15 @@
 
         header h1 {
             font-size: 2.2rem;
+            margin: 0;
             letter-spacing: -1px;
-            margin-bottom: 8px;
         }
 
         header p {
             color: var(--text-dim);
-            font-size: 0.95rem;
-            line-height: 1.5;
+            font-size: 0.9rem;
+            margin-top: 10px;
+            line-height: 1.4;
         }
 
         .links {
@@ -57,7 +58,7 @@
         .link-item {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 8px;
+            border-radius: 4px;
             padding: 18px 20px;
             text-decoration: none;
             color: inherit;
@@ -65,46 +66,107 @@
         }
 
         .link-item:hover {
-            border-color: #444;
-            transform: translateY(-1px);
+            border-color: var(--accent);
+            background: #0d0d0d;
         }
 
         .featured {
             border: 1px solid var(--accent);
-            background: rgba(74, 222, 128, 0.02);
         }
 
         .link-header {
             display: flex;
             justify-content: space-between;
             align-items: baseline;
-            margin-bottom: 5px;
+            margin-bottom: 6px;
         }
 
         .link-title {
-            font-weight: 600;
+            font-weight: bold;
             font-size: 1.05rem;
         }
 
-        .link-desc {
-            font-size: 0.82rem;
-            color: var(--text-dim);
-            line-height: 1.4;
-        }
-
         .price {
-            font-family: 'Courier New', monospace;
             color: var(--accent);
             font-weight: bold;
             font-size: 0.95rem;
         }
 
-        .pow-section {
-            margin-top: 40px;
+        .link-desc {
+            font-size: 0.82rem;
+            color: var(--text-dim);
+            line-height: 1.5;
+        }
+
+        .expand-group {
+            margin-top: 20px;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .expand-btn {
+            background: none;
+            border: 1px dashed var(--border);
+            color: var(--text-dim);
+            width: 100%;
+            padding: 10px;
+            cursor: pointer;
+            font-family: inherit;
+            font-size: 0.75rem;
+            transition: 0.2s;
+            text-align: left;
+        }
+
+        .expand-btn:hover {
+            color: #fff;
+            border-color: #444;
+        }
+
+        .hidden-content {
+            display: none;
+            grid-template-columns: 1fr 1fr;
+            gap: 10px;
+            margin-top: 5px;
+            margin-bottom: 15px;
+        }
+
+        .res-link {
             background: var(--card-bg);
             border: 1px solid var(--border);
-            border-radius: 8px;
+            padding: 12px;
+            text-decoration: none;
+            color: #fff;
+            font-size: 0.75rem;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .res-link:hover {
+            border-color: #555;
+        }
+
+        .res-link i {
+            color: var(--accent);
+            width: 14px;
+        }
+
+        .article-link {
+            grid-column: span 2;
+        }
+
+        .article-link i {
+            color: #ffd700;
+        }
+
+        /* Gold for prizes */
+
+        .pow-section {
+            margin-top: 40px;
+            border: 1px solid var(--border);
             padding: 22px;
+            border-radius: 4px;
         }
 
         .pow-section h3 {
@@ -134,25 +196,9 @@
             font-size: 0.9rem;
         }
 
-        .pow-item b {
-            color: #fff;
-        }
-
-        .socials {
-            display: flex;
-            justify-content: center;
-            gap: 25px;
-            margin-top: 35px;
-        }
-
-        .social-icon {
-            color: var(--text-dim);
-            font-size: 1.4rem;
-            transition: color 0.2s;
-        }
-
-        .social-icon:hover {
-            color: var(--text-main);
+        .z3n-link {
+            color: var(--accent);
+            text-decoration: underline;
         }
 
         footer {
@@ -161,7 +207,16 @@
             font-size: 0.7rem;
             color: #333;
             letter-spacing: 1px;
-            text-transform: uppercase;
+        }
+
+        @media (max-width: 480px) {
+            .hidden-content {
+                grid-template-columns: 1fr;
+            }
+
+            .article-link {
+                grid-column: span 1;
+            }
         }
     </style>
 </head>
@@ -169,19 +224,18 @@
 <body>
     <div class="container">
         <header>
-            <h1>w3bgr3p</h1>
-            <p>ZennoPoster & C# Developer<br>
-                Automation for Web3 / Multi-accounting</p>
+            <h1>> w3bgr3p</h1>
+            <p>ZennoPoster & C# Developer<br>Automation for Web3 / Multi-accounting</p>
         </header>
 
         <div class="links">
-            <a href="https://t.me/z3nFarm" class="link-item featured" target="_blank">
+            <a href="https://t.me/w3bgr3p" class="link-item featured" target="_blank">
                 <div class="link-header">
                     <span class="link-title" style="color: var(--accent);">Z3nFarm (Private Group)</span>
                     <span class="price">Subscription</span>
                 </div>
-                <div class="link-desc">Доступ к моим шаблонам под актуальные крипто-проекты.<br>
-                    Access to my personal automation tools for active Web3 projects.</div>
+                <div class="link-desc">Доступ к моим шаблонам под актуальные крипто-проекты.<br>Access to my personal
+                    automation tools for active Web3 projects.</div>
             </a>
 
             <a href="https://t.me/w3bgr3p" class="link-item" target="_blank">
@@ -189,11 +243,8 @@
                     <span class="link-title">Web3 & Airdrop Software</span>
                     <span class="price">from $500</span>
                 </div>
-                <div class="link-desc">
-                    Сложные сценарии: работа с блокчейном, эмуляция поведения пользователя, индивидуализация и
-                    рандомизация алгоритмов.<br>
-                    Complex scenarios: on-chain interaction, behavioral emulation and per-account logic randomization.
-                </div>
+                <div class="link-desc">Сложные сценарии: работа с блокчейном, эмуляция поведения пользователя,
+                    индивидуализация и рандомизация алгоритмов.</div>
             </a>
 
             <a href="https://t.me/w3bgr3p" class="link-item" target="_blank">
@@ -201,8 +252,7 @@
                     <span class="link-title">Automation & Parsing</span>
                     <span class="price">from $150</span>
                 </div>
-                <div class="link-desc">Браузерная автоматизация, сбор и обработка данных любой сложности.<br>
-                    Browser automation, complex data mining and processing.</div>
+                <div class="link-desc">Браузерная автоматизация, сбор и обработка данных любой сложности.</div>
             </a>
 
             <a href="https://t.me/w3bgr3p" class="link-item" target="_blank">
@@ -210,8 +260,7 @@
                     <span class="link-title">Code Review & Optimization</span>
                     <span class="price">from $200</span>
                 </div>
-                <div class="link-desc">Аудит и оптимизация вашего Zenno/C# кода.<br>
-                    Audit and optimization of your Zenno/C# codebase.</div>
+                <div class="link-desc">Аудит и оптимизация вашего Zenno/C# кода.</div>
             </a>
 
             <a href="https://t.me/w3bgr3p" class="link-item" target="_blank">
@@ -219,43 +268,90 @@
                     <span class="link-title">Consultation</span>
                     <span class="price">$100/h</span>
                 </div>
-                <div class="link-desc">Технический разбор, архитектура и поиск узких мест.<br>
-                    Tech issues, system architecture and bottleneck analysis.</div>
+                <div class="link-desc">Технический разбор, архитектура и поиск узких мест.</div>
             </a>
         </div>
 
+        <div class="expand-group">
+            <button class="expand-btn" onclick="toggleSection('extra-links', this)">[+] Links</button>
+            <div id="extra-links" class="hidden-content">
+                <a href="https://t.me/w3bgr3p" class="res-link" target="_blank"><i class="fab fa-telegram"></i>DM</a>
+                <a href="https://github.com/w3bgr3p" class="res-link" target="_blank"><i
+                        class="fab fa-github"></i>GitHub</a>
+                <a href="https://t.me/w3btopia" class="res-link" target="_blank"><i
+                        class="fab fa-telegram"></i>w3btopia</a>
+                <a href="https://www.youtube.com/@w3bgr3p" class="res-link" target="_blank"><i
+                        class="fab fa-youtube"></i>YouTube</a>
+                <a href="https://t.me/z3nDev" class="res-link" target="_blank"><i class="fab fa-telegram"></i>z3nDev
+                    (Chat)</a>
+                <a href="https://discord.gg/zX9ubenG9g" class="res-link" target="_blank"><i
+                        class="fab fa-discord"></i>z3n Discord</a>
+                <a href="https://t.me/z3nLabs" class="res-link" target="_blank"><i
+                        class="fab fa-telegram"></i>z3nLabs</a>
+                <a href="https://www.linkedin.com/in/w3bgr3p/" class="res-link" target="_blank"><i
+                        class="fab fa-linkedin"></i>LinkedIn</a>
+            </div>
+
+            <button class="expand-btn" onclick="toggleSection('articles', this)">[+] Articles (Case
+                Studies)</button>
+            <div id="articles" class="hidden-content">
+                <a href="https://zenno.club/discussion/threads/zbsync-zennoposter-zennobrowser-sql-profile-manager.130582/"
+                    class="res-link article-link" target="_blank"><i class="fa-solid fa-trophy"></i>
+                    ZBSync Profile Manager</a>
+                <a href="https://zenno.club/discussion/threads/z3ncore-dll-utilitarnyj-c-multitul-dlja-raboty-s-zennoposter.129161/"
+                    class="res-link article-link" target="_blank"><i class="fas fa-medal"></i> z3nCore DLL: Utility
+                    Multitool</a>
+                <a href="https://zenno.club/discussion/threads/web3monster-shvejcarskij-nozh-iz-snippetov-dlja-raboty-v-web3-na-zhivyx-primerax-s-edinoj-logikoj.124466/"
+                    class="res-link article-link" target="_blank"><i class="fas fa-medal"></i>
+                    Web3Monster: Swiss Army Knife</a>
+                <a href="https://zenno.club/discussion/threads/zenno-luchshaja-dver-v-avtomatizaciju-3k-so-vtorogo-kejsa-universalnyj-shablon-kikstarter-dlja-raboty-v-web3-fermoj-v-komplekte-kazhdyj-mozhet.119999/"
+                    class="res-link article-link" target="_blank"><i class="fa-solid fa-award"></i> Web3 Farm
+                    Kickstarter
+                    Guide</a>
+            </div>
+        </div>
 
         <div class="pow-section">
             <h3>Proof of Work</h3>
             <div class="pow-item">
                 <i class="fas fa-award"></i>
-                <span><b>ZennoLab Prize Winner.</b> Решения, признанные разработчиками платформы.</span>
+                <span><b>ZennoLab Prize Winner</b><br>Решения, признанные разработчиками платформы</span>
             </div>
             <div class="pow-item">
                 <i class="fas fa-code-merge"></i>
                 <span><b>Author of <a href="https://github.com/w3bgr3p/z3nCore" target="_blank"
-                            style="color: inherit; text-decoration: underline;">z3nCore</a>.</b> Open-source библиотека.
-                    Используется профи в реальных проектах.</span>
+                            class="z3n-link">z3nCore</a></b><br> Open-source библиотека для Zenno-разработчиков</span>
             </div>
             <div class="pow-item">
                 <i class="fas fa-chart-line"></i>
-                <span><b>Yield examples (per acc):</b><br> Movement $200-$1500, MagicSquare $130-$500, Initia $70-$500,
-                    ChainOpera $100-$500.</span>
+                <span><b>Scripts yield examples (per acc):</b><br>Movement $200-$1500, MagicSquare $130-$500, Initia
+                    $70-$500,
+                    ChainOpera $100-$500</span>
             </div>
-        </div>
-
-        <div class="socials">
-            <a href="https://t.me/w3bgr3p" class="social-icon" target="_blank"><i class="fab fa-telegram"></i></a>
-            <a href="https://github.com/w3bgr3p" class="social-icon" target="_blank"><i class="fab fa-github"></i></a>
-            <a href="https://x.com/w3bgrep" class="social-icon" target="_blank"><i class="fab fa-x-twitter"></i></a>
-            <a href="https://discord.gg/zX9ubenG9g" class="social-icon" target="_blank"><i
-                    class="fab fa-discord"></i></a>
         </div>
 
         <footer>
             NO SPAM. NO CORPORATE. JUST AUTOMATION.
         </footer>
     </div>
+
+    <script>
+        function toggleSection(id, btn) {
+            var x = document.getElementById(id);
+            var isVisible = x.style.display === "grid";
+
+            // Сначала закрываем все (если нужно, чтобы открыта была только одна)
+            // Но в данном случае оставим возможность открывать обе сразу
+
+            if (isVisible) {
+                x.style.display = "none";
+                btn.innerHTML = btn.innerHTML.replace('[-]', '[+]');
+            } else {
+                x.style.display = "grid";
+                btn.innerHTML = btn.innerHTML.replace('[+]', '[-]');
+            }
+        }
+    </script>
 </body>
 
 </html>
