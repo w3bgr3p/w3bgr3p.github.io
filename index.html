@@ -3,32 +3,432 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>w3bgrep liinks</title>
-    <link rel="stylesheet" href="styles.css">
+    <title>w3bgr3p</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link href="https://fonts.googleapis.com/css2?family=JetBrains+Mono:wght@400;700&display=swap" rel="stylesheet">
+    <style>
+        *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+        ::selection { background: #c8f53c; color: #000; }
+        html { scroll-behavior: smooth; }
+
+        :root {
+            --bg:     #0a0a0a;
+            --bg2:    #111111;
+            --border: #1e1e1e;
+            --dim:    #2e2e2e;
+            --muted:  #555;
+            --fg:     #e2e2d8;
+            --hi:     #c8f53c;
+            --hi2:    #a78bfa;
+            --hi3:    #38bdf8;
+            --mono:   'JetBrains Mono', monospace;
+        }
+
+        body {
+            font-family: var(--mono);
+            background: var(--bg);
+            color: var(--fg);
+            min-height: 100vh;
+            overflow-x: hidden;
+        }
+
+        body::before {
+            content: '';
+            position: fixed; inset: 0; z-index: 0;
+            background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            opacity: .028; pointer-events: none;
+        }
+
+        body::after {
+            content: '';
+            position: fixed; inset: 0; z-index: 0;
+            background: repeating-linear-gradient(0deg, transparent, transparent 2px, rgba(0,0,0,.1) 2px, rgba(0,0,0,.1) 4px);
+            pointer-events: none;
+        }
+
+        .grid-bg {
+            position: fixed; inset: 0; z-index: 0; pointer-events: none;
+            background-image:
+                    linear-gradient(var(--border) 1px, transparent 1px),
+                    linear-gradient(90deg, var(--border) 1px, transparent 1px);
+            background-size: 52px 52px;
+            mask-image: radial-gradient(ellipse 80% 60% at 50% 10%, black 10%, transparent 70%);
+        }
+
+        .page {
+            max-width: 520px;
+            margin: 0 auto;
+            padding: 60px 24px 72px;
+            position: relative; z-index: 1;
+        }
+
+        @keyframes up {
+            from { opacity: 0; transform: translateY(14px); }
+            to   { opacity: 1; transform: translateY(0); }
+        }
+        .a1 { animation: up .45s ease both; }
+        .a2 { animation: up .45s .08s ease both; }
+        .a3 { animation: up .45s .16s ease both; }
+        .a4 { animation: up .45s .24s ease both; }
+        .a5 { animation: up .45s .32s ease both; }
+        .a6 { animation: up .45s .40s ease both; }
+
+        /* HEADER */
+        header { margin-bottom: 40px; }
+
+        .handle {
+            font-size: clamp(3rem, 13vw, 4.8rem);
+            font-weight: 700;
+            line-height: .92;
+            letter-spacing: -.025em;
+            color: #fff;
+            margin-bottom: 18px;
+        }
+
+        .cur { color: var(--hi); animation: blink 1.1s step-end infinite; }
+        @keyframes blink { 50% { opacity: 0; } }
+
+        .role-line {
+            font-size: 10px;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            color: var(--muted);
+            line-height: 2;
+            margin-bottom: 16px;
+        }
+        .role-line .g { color: var(--hi); }
+        .role-line .p { color: var(--hi2); }
+        .role-line .b { color: var(--hi3); }
+
+        .bio {
+            font-size: 12px;
+            color: var(--muted);
+            line-height: 1.7;
+            padding-left: 14px;
+            border-left: 2px solid var(--dim);
+            max-width: 400px;
+        }
+
+        /* STACK */
+        .tags { display: flex; flex-wrap: wrap; gap: 5px; margin-bottom: 4px; }
+        .tag {
+            font-size: 9.5px; padding: 2px 8px;
+            border: 1px solid var(--dim); color: var(--muted);
+            letter-spacing: .08em; text-transform: uppercase;
+        }
+        .tag.g { border-color: #243420; color: var(--hi); }
+        .tag.p { border-color: #2a1e48; color: var(--hi2); }
+        .tag.b { border-color: #0e2630; color: var(--hi3); }
+
+        /* SECTION LABEL */
+        .sec {
+            font-size: 9.5px; letter-spacing: .2em;
+            text-transform: uppercase; color: var(--dim);
+            margin-bottom: 10px;
+            display: flex; align-items: center; gap: 8px;
+        }
+        .sec::before { content: '//'; color: var(--border); }
+
+        hr { border: none; border-top: 1px solid var(--border); margin: 28px 0 22px; }
+
+        /* SERVICE GRID */
+        .svc-grid {
+            display: flex; flex-direction: column;
+            gap: 1px; background: var(--border);
+            border: 1px solid var(--border);
+            margin-bottom: 1px;
+        }
+
+        .svc {
+            display: block; text-decoration: none; color: inherit;
+            background: var(--bg);
+            padding: 15px 16px;
+            transition: background .1s;
+        }
+        .svc:hover { background: var(--bg2); }
+
+        .svc-top {
+            display: flex; justify-content: space-between;
+            align-items: baseline; gap: 8px; margin-bottom: 4px;
+        }
+
+        .svc-name { font-size: 12.5px; font-weight: 700; color: var(--fg); }
+        .svc-name.g { color: var(--hi); }
+        .svc-name.p { color: var(--hi2); }
+
+        .svc-price { font-size: 11px; color: var(--hi); white-space: nowrap; flex-shrink: 0; }
+        .svc-desc { font-size: 11px; color: var(--muted); line-height: 1.55; }
+
+        /* secondary services block */
+        .svc-grid.secondary .svc-name { color: var(--muted); font-weight: 400; }
+        .svc-grid.secondary .svc-name.label { color: var(--dim); font-size: 10px; letter-spacing: .1em; text-transform: uppercase; font-weight: 400; }
+
+        /* EXPAND */
+        .tog {
+            background: none; border: 1px dashed var(--dim);
+            color: var(--muted); width: 100%;
+            padding: 9px 12px; font-family: var(--mono);
+            font-size: 10.5px; text-align: left; cursor: pointer;
+            letter-spacing: .04em; transition: .12s; margin-top: 8px;
+        }
+        .tog:hover { color: var(--fg); border-color: var(--muted); }
+
+        .tog-body {
+            display: none;
+            gap: 1px; background: var(--border);
+            border: 1px solid var(--border); border-top: none;
+            grid-template-columns: 1fr 1fr;
+        }
+        .tog-body.open { display: grid; }
+
+        .lnk {
+            display: flex; align-items: center; gap: 9px;
+            text-decoration: none; color: var(--muted);
+            font-size: 11px; padding: 10px 12px;
+            background: var(--bg); transition: .1s;
+        }
+        .lnk:hover { background: var(--bg2); color: var(--fg); }
+        .lnk i { color: var(--dim); width: 13px; flex-shrink: 0; transition: color .1s; }
+        .lnk:hover i { color: var(--hi); }
+        .lnk.gold i { color: #fbbf24; }
+        .lnk.s2 { grid-column: span 2; }
+
+        /* POW */
+        .pow {
+            margin-top: 28px;
+            border: 1px solid var(--border);
+            background: var(--bg2);
+            padding: 20px;
+            position: relative;
+        }
+        .pow::before {
+            content: '// background';
+            position: absolute; top: 0; left: 14px;
+            transform: translateY(-50%);
+            background: var(--bg2);
+            font-size: 9px; letter-spacing: .15em; text-transform: uppercase;
+            color: var(--dim); padding: 0 6px;
+        }
+
+        .pow-row {
+            display: flex; gap: 11px;
+            padding: 10px 0;
+            border-bottom: 1px solid var(--border);
+            font-size: 11.5px; line-height: 1.6;
+        }
+        .pow-row:first-child { padding-top: 0; }
+        .pow-row:last-child  { border-bottom: none; padding-bottom: 0; }
+
+        .pi { flex-shrink: 0; margin-top: 2px; font-size: 11px; }
+        .pi.g { color: var(--hi); }
+        .pi.p { color: var(--hi2); }
+        .pi.y { color: #fbbf24; }
+
+        .pow-row strong { color: var(--fg); font-weight: 700; }
+        .pow-row p { color: var(--muted); margin-top: 2px; font-size: 11px; }
+        .hl { color: var(--hi); text-decoration: underline; text-underline-offset: 3px; }
+
+        footer {
+            margin-top: 52px; text-align: center;
+            font-size: 9px; letter-spacing: .15em;
+            text-transform: uppercase; color: var(--dim);
+        }
+
+        @media (max-width: 480px) {
+            .tog-body { grid-template-columns: 1fr; }
+            .lnk.s2 { grid-column: span 1; }
+        }
+    </style>
 </head>
 <body>
-    <header>
-        <h1>w3bgr3p</h1>
-       
+
+<div class="grid-bg"></div>
+
+<div class="page">
+
+    <!-- HEADER -->
+    <header class="a1">
+        <div class="handle">w3bgr3p<span class="cur">_</span></div>
+        <div class="role-line">
+            <span class="g">C# · .NET 10</span> &nbsp;·&nbsp;
+            <span class="p">AI Integration</span> &nbsp;·&nbsp;
+            <span class="b">Web3 Fintech</span>
+        </div>
+        <p class="bio">
+            Building .NET apps, web3 systems and AI-powered tools.
+        </p>
     </header>
-    <main>
-        <section class="links">
-            <h2></h2>
-            <div id="social-links"></div>
-        </section>
-        <section class="links">
-            <h2>extra links</h2>
-            <div id="community-links"></div>
-        </section>
-        <section class="repos">
-            <h2>last repos</h2>
-            <div id="project-list"></div>
-        </section>
-    </main>
-    <footer>
-        <p>© 2025 | built</p>
-    </footer>
-    <script src="script.js"></script>
+
+    <!-- STACK -->
+    <div class="a2">
+        <div class="sec">stack</div>
+        <div class="tags">
+            <span class="tag g">.NET 10</span>
+            <span class="tag g">C#</span>
+            <span class="tag g">Playwright</span>
+            <span class="tag g">Roslyn CSX</span>
+            <span class="tag p">LLM APIs</span>
+            <span class="tag p">AI Agents</span>
+            <span class="tag p">Prompt Eng.</span>
+            <span class="tag b">EVM / Web3</span>
+            <span class="tag b">Nethereum</span>
+            <span class="tag b">SQLite / PG</span>
+        </div>
+    </div>
+
+    <hr>
+
+    <!-- PRIMARY SERVICES -->
+    <div class="a3">
+        <div class="sec">services</div>
+        <div class="svc-grid">
+
+            <a href="https://t.me/w3bgr3p" class="svc" target="_blank">
+                <div class="svc-top">
+                    <span class="svc-name g">.NET Apps & Websites</span>
+                    <span class="svc-price">from $400</span>
+                </div>
+                <div class="svc-desc">Desktop tools, dashboards, web apps. Embedded server, scheduler, SQLite/PG backend. Full-stack or backend-only.</div>
+            </a>
+
+            <a href="https://t.me/w3bgr3p" class="svc" target="_blank">
+                <div class="svc-top">
+                    <span class="svc-name g">AI-Powered Tools & Agents</span>
+                    <span class="svc-price">from $300</span>
+                </div>
+                <div class="svc-desc">LLM integration into .NET workflows — analysis pipelines, automated reports, decision agents, AI-assisted monitoring.</div>
+            </a>
+
+            <a href="https://t.me/w3bgr3p" class="svc" target="_blank">
+                <div class="svc-top">
+                    <span class="svc-name p">Web3 Fintech Software</span>
+                    <span class="svc-price">from $500</span>
+                </div>
+                <div class="svc-desc">On-chain interaction, multi-wallet orchestration, DeFi integrations. EVM-native, Nethereum-based.</div>
+            </a>
+
+            <a href="https://t.me/w3bgr3p" class="svc" target="_blank">
+                <div class="svc-top">
+                    <span class="svc-name p">Automation & Data</span>
+                    <span class="svc-price">from $150</span>
+                </div>
+                <div class="svc-desc">Browser automation, scraping, data pipelines. Any complexity.</div>
+            </a>
+
+            <a href="https://t.me/z3nLabs/276/277" class="svc" target="_blank">
+                <div class="svc-top">
+                    <span class="svc-name">Z3nFarm · Private Access</span>
+                    <span class="svc-price">Subscription</span>
+                </div>
+                <div class="svc-desc">Curated tooling for Web3 protocol automation. On-chain execution, account management.</div>
+            </a>
+
+        </div>
+    </div>
+
+    <!-- ZENNOPOSTER BLOCK -->
+    <div class="a4">
+        <hr>
+        <div class="sec">ZennoPoster</div>
+        <div class="svc-grid secondary">
+
+            <a href="https://t.me/w3bgr3p" class="svc" target="_blank">
+                <div class="svc-top">
+                    <span class="svc-name">Code Review & Optimization</span>
+                    <span class="svc-price">from $200</span>
+                </div>
+                <div class="svc-desc">Audit and optimization of ZennoPoster / C# codebases.</div>
+            </a>
+
+            <a href="https://t.me/w3bgr3p" class="svc" target="_blank">
+                <div class="svc-top">
+                    <span class="svc-name">Consultation</span>
+                    <span class="svc-price">$100 / h</span>
+                </div>
+                <div class="svc-desc">Architecture, bottlenecks, ZP-specific issues.</div>
+            </a>
+
+        </div>
+    </div>
+
+    <!-- LINKS -->
+    <div class="a5">
+        <button class="tog" onclick="tog('lnk',this)">[+] links</button>
+        <div id="lnk" class="tog-body">
+            <a href="https://t.me/w3bgr3p"               class="lnk" target="_blank"><i class="fab fa-telegram"></i>DM</a>
+            <a href="https://t.me/w3blab"               class="lnk" target="_blank"><i class="fab fa-telegram"></i>z3nLabs</a>
+            <a href="https://t.me/w3btopia"              class="lnk" target="_blank"><i class="fab fa-telegram"></i>w3btopia</a>
+            <a href="https://t.me/z3nDev"                class="lnk" target="_blank"><i class="fab fa-telegram"></i>z3nDev</a>
+            <a href="https://github.com/w3bgr3p"         class="lnk" target="_blank"><i class="fab fa-github"></i>GitHub</a>
+            <a href="https://www.youtube.com/@w3bgr3p"   class="lnk" target="_blank"><i class="fab fa-youtube"></i>YouTube</a>
+            <a href="https://discord.gg/zX9ubenG9g"      class="lnk" target="_blank"><i class="fab fa-discord"></i>Discord</a>
+            <a href="https://www.linkedin.com/in/w3bgr3p/" class="lnk" target="_blank"><i class="fab fa-linkedin"></i>LinkedIn</a>
+        </div>
+    </div>
+
+    <!-- POW / BACKGROUND -->
+    <div class="pow a6">
+        <div class="pow-row">
+            <i class="fas fa-microchip pi p"></i>
+            <div>
+                <strong><a href="https://github.com/w3bgr3p/z3n8" target="_blank" class="hl">z3n8</a> — .NET 10 Orchestrator</strong>
+                <p>Full-stack desktop system: embedded HTTP server, WebView2 dashboard, Roslyn CSX executor, task scheduler, LLM analytics, Web3/EVM module. Solo build.</p>
+            </div>
+        </div>
+        <div class="pow-row">
+            <i class="fas fa-code pi g"></i>
+            <div>
+                <strong><a href="https://github.com/w3bgr3p/z3nCore" target="_blank" class="hl">z3nCore</a> — open-source .NET library</strong>
+                <p>Functional utility library. Used in production by professionals across the community.</p>
+            </div>
+        </div>
+        <div class="pow-row">
+            <i class="fas fa-award pi y"></i>
+            <div>
+                <strong>ZennoLab competition winner</strong>
+                <p>Multiple wins. Solutions recognised by the platform developers.</p>
+            </div>
+        </div>
+        <div class="pow-row">
+            <i class="fas fa-medal pi y"></i>
+            <div>
+                <strong>Published case studies</strong>
+                <p>
+                    ZBSync Profile Manager &nbsp;·&nbsp;
+                    z3nCore DLL Multitool &nbsp;·&nbsp;
+                    Web3Monster &nbsp;·&nbsp;
+                    Web3 Farm Kickstarter Guide
+                </p>
+            </div>
+        </div>
+    </div>
+
+    <!-- ARTICLES expand -->
+    <div class="a6">
+        <button class="tog" onclick="tog('art',this)">[+] articles &amp; case studies</button>
+        <div id="art" class="tog-body">
+            <a href="https://zenno.club/discussion/threads/zbsync-zennoposter-zennobrowser-sql-profile-manager.130582/"
+               class="lnk gold s2" target="_blank"><i class="fa-solid fa-trophy"></i>ZBSync Profile Manager</a>
+            <a href="https://zenno.club/discussion/threads/z3ncore-dll-utilitarnyj-c-multitul-dlja-raboty-s-zennoposter.129161/"
+               class="lnk gold s2" target="_blank"><i class="fas fa-medal"></i>z3nCore DLL: Utility Multitool</a>
+            <a href="https://zenno.club/discussion/threads/web3monster-shvejcarskij-nozh-iz-snippetov-dlja-raboty-v-web3-na-zhivyx-primerax-s-edinoj-logikoj.124466/"
+               class="lnk gold s2" target="_blank"><i class="fas fa-medal"></i>Web3Monster: Swiss Army Knife</a>
+            <a href="https://zenno.club/discussion/threads/zenno-luchshaja-dver-v-avtomatizaciju-3k-so-vtorogo-kejsa-universalnyj-shablon-kikstarter-dlja-raboty-v-web3-fermoj-v-komplekte-kazhdyj-mozhet.119999/"
+               class="lnk gold s2" target="_blank"><i class="fa-solid fa-award"></i>Web3 Farm Kickstarter Guide</a>
+        </div>
+    </div>
+
+    <footer>NO SPAM · NO CORPORATE · JUST SYSTEMS</footer>
+
+</div>
+
+<script>
+    function tog(id, btn) {
+        var el = document.getElementById(id);
+        var open = el.classList.toggle('open');
+        btn.textContent = btn.textContent.replace(open ? '[+]' : '[-]', open ? '[-]' : '[+]');
+    }
+</script>
 </body>
 </html>
